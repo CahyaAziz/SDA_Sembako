@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include "functions/auth.h"
+#include "functions/antrian.h"
 
 using namespace std;
 
@@ -25,10 +26,12 @@ void userMenu(string user) {
         cin >> pilihan;
         switch (pilihan) {
             case 1:
-                cout << "Tampilan antrian" << endl;
+                lihatAntrian();
+                system("pause");
                 break;
-            case 2:
-                cout << "Ambil antrian" << endl;
+                case 2:
+                tambahAntrian(user);
+                system("pause");
                 break;
             case 3:
                 cout << "Terima sembako" << endl;
@@ -61,10 +64,12 @@ void adminMenu() {
         cin >> pilihan;
         switch (pilihan) {
             case 1:
-                cout << "Tambah antrian" << endl;
+                lihatAntrian();
+                system("pause");
                 break;
-            case 2:
-                cout << "Hapus antrian" << endl;
+                case 2:
+                hapusAntrian();
+                system("pause");
                 break;
             case 3:
                 cout << "Cari data" << endl;
