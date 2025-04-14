@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cstdlib>
 #include "functions/auth.h"
 #include "functions/antrian.h"
 #include "functions/stock.h"
