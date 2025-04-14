@@ -87,7 +87,6 @@ void adminMenu() {
                 cout << "Riwayat distribusi" << endl;
                 break;
             case 5:
-                tampilanStok(daftar);
                 editStok(daftar);
                 break;
             case 0:
