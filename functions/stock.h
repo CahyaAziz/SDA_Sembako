@@ -1,17 +1,16 @@
-#ifndef STOK_H
-#define STOK_H
+#ifndef STOCK_H
+#define STOCK_H
 
-#include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
+using namespace std;
 
 struct Sembako {
-    std::string nama;
+    string nama;
     int stok;
 };
 
-
-void tampilanStok(const std::vector<Sembako>& daftar);
-void editStok(std::vector<Sembako>& daftar);
+void tampilanStok(const vector<Sembako>& daftar);
+void editStok(vector<Sembako>& daftar);
 
 #endif
