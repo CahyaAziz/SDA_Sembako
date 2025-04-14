@@ -80,6 +80,12 @@ void adminMenu() {
                 break;
             case 5:
                 cout << "Lihat dan edit stok" << endl;
+                tampilanStok();
+                system("pause");
+                break;
+                case 6:
+                editStok();
+                system("pause");
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;
