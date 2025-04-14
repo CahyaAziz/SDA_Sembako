@@ -2,6 +2,7 @@
 #include <iomanip>
 #include "functions/auth.h"
 #include "functions/antrian.h"
+#include "functions/stock.h"
 
 using namespace std;
 
