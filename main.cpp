@@ -76,17 +76,17 @@ void adminMenu() {
                 lihatAntrian();
                 system("pause");
                 break;
-                case 2:
+            case 2:
                 hapusAntrian();
                 system("pause");
                 break;
-                case 3:
+            case 3:
                 cout << "Cari data" << endl;
                 break;
-                case 4:
+            case 4:
                 cout << "Riwayat distribusi" << endl;
                 break;
-                case 5:
+            case 5:
                 tampilanStok(daftar);
                 editStok(daftar);
                 break;
