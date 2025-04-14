@@ -1,8 +1,18 @@
 #include <iostream>
 #include <iomanip>
 #include "functions/auth.h"
+#include "functions/antrian.h"
+#include "functions/stock.h"
+#include <vector>
 
 using namespace std;
+vector<Sembako> daftar = {
+    {"Beras", 100},
+    {"Minyak Goreng", 50},
+    {"Gula", 30},
+    {"Susu", 20},
+    {"Mie Instan", 200}
+};
 
 void userMenu(string user) {
     while(true) {
@@ -25,10 +35,12 @@ void userMenu(string user) {
         cin >> pilihan;
         switch (pilihan) {
             case 1:
-                cout << "Tampilan antrian" << endl;
+                lihatAntrian();
+                system("pause");
                 break;
-            case 2:
-                cout << "Ambil antrian" << endl;
+                case 2:
+                tambahAntrian(user);
+                system("pause");
                 break;
             case 3:
                 cout << "Terima sembako" << endl;
@@ -61,10 +73,12 @@ void adminMenu() {
         cin >> pilihan;
         switch (pilihan) {
             case 1:
-                cout << "Tambah antrian" << endl;
+                lihatAntrian();
+                system("pause");
                 break;
             case 2:
-                cout << "Hapus antrian" << endl;
+                hapusAntrian();
+                system("pause");
                 break;
             case 3:
                 cout << "Cari data" << endl;
@@ -73,7 +87,7 @@ void adminMenu() {
                 cout << "Riwayat distribusi" << endl;
                 break;
             case 5:
-                cout << "Lihat dan edit stok" << endl;
+                editStok(daftar);
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;
@@ -84,6 +98,7 @@ void adminMenu() {
         }
     }
 }
+
 
 int main() {
     string user;

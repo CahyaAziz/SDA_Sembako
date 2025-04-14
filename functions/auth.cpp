@@ -8,18 +8,44 @@ using namespace std;
 akun user;
 
 void registerAkun() {
-    system("CLS");
-    cout << "Masukkan NIK: ";
-    cin >> user.NIK;
+    while(true){
+        string NIK;
+        bool dupe = false;
+
+        system("CLS");
+        cout << "Masukkan NIK: ";
+        cin >> NIK;
+
+        vector<akun> users = loadUsers();
+
+        for (const akun& i : users) {
+            if (i.NIK == NIK) {
+                cout << endl << "Akun sudah ada!" << endl;
+                dupe = true;
+                break;
+            }
+        }
+        if(dupe) {
+            continue;
+        }
+        user.NIK = NIK;
+        break;
+    }
     cout << "Masukkan Nama: ";
     cin >> user.nama;
-    cout << "Masukkan Jenis Kelamin (L/P): ";
-    cin >> user.jenisKelamin;
+    while(true) {
+        cout << "Masukkan Jenis Kelamin (L/P): ";
+        cin >> user.jenisKelamin;
+        if(tolower(user.jenisKelamin) == 'l' || tolower(user.jenisKelamin) == 'p') {
+            system("CLS");
+            break;
+        }
+    }
     cout << "Masukkan Umur: ";
     cin >> user.umur;
     cout << "Masukkan Password: ";
     cin >> user.password;
-
+    
     saveUser(user);
 }
 
