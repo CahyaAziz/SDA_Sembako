@@ -3,6 +3,7 @@
 #include "helper.h"
 #include "antrian.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 vector<pair<string, int>> minimum = {
@@ -44,14 +45,15 @@ void editStok(vector<Sembako>& daftar) {
     } else {
         cout << "Stok berhasil diperbarui.\n";
     }
+
+    saveStokToCSV(daftar);  // Simpan perubahan
 }
 
 bool checkStock(const vector<Sembako>& daftar, const vector<pair<string, int>>& minimums) {
-    for (const auto& i : minimum) {
+    for (const auto& i : minimums) {
         string nama = i.first;
         int required = i.second;
 
-        // Find the item in the daftar vector
         bool found = false;
         for (const Sembako& item : daftar) {
             if (item.nama == nama) {
@@ -68,41 +70,48 @@ bool checkStock(const vector<Sembako>& daftar, const vector<pair<string, int>>& 
             return false;
         }
     }
-
     return true;
 }
 
-void terimaSembako(const vector<Sembako>& daftar, const string& NIK) {
+void kurangiStok(vector<Sembako>& daftar, const vector<pair<string, int>>& minimums) {
+    for (auto& i : daftar) {
+        for (const auto& min : minimums) {
+            if (i.nama == min.first) {
+                i.stok -= min.second;
+                if (i.stok < 0) i.stok = 0;
+            }
+        }
+    }
+    saveStokToCSV(daftar); // Simpan setelah dikurangi
+}
+
+void terimaSembako(vector<Sembako>& daftar, const string& NIK) {
     vector<akun> users = loadUsers();
 
-    if (!(checkStock(daftar, minimum))) {
-        cout << "Stock habis" << endl;
+    if (!checkStock(daftar, minimum)) {
+        cout << "Stok tidak mencukupi.\n";
         return;
     }
 
     for (const akun& u : users) {
         if (u.NIK == NIK) {
             if (u.menerima) {
-                cout << "Anda sudah menerima sembako." << endl;
+                cout << "Anda sudah menerima sembako.\n";
                 return;
             }
             if (u.queue) {
                 cout << "\n=== Daftar Sembako ===\n";
-                cout << "Beras - 5kg" << endl;
-                cout << "Telur - 1kg" << endl;
-                cout << "Minyak - 2L" << endl;
-                cout << "Gula - 1kg" << endl;
-                cout << "Susu - 2" << endl;
-                cout << "Mie Instan - 10" << endl << endl;
+                cout << "Beras - 5kg\nTelur - 1kg\nMinyak - 2L\nGula - 1kg\nSusu - 2\nMie Instan - 10\n\n";
 
+                kurangiStok(daftar, minimum);
                 updateStatus(NIK);
                 hapusAntrian();
             } else {
-                cout << "Anda belum dipanggil! Silakan menunggu admin." << endl;
+                cout << "Anda belum dipanggil! Silakan menunggu admin.\n";
             }
             return;
         }
     }
 
-    cout << "NIK tidak ditemukan." << endl;
+    cout << "NIK tidak ditemukan.\n";
 }
