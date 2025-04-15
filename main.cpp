@@ -4,6 +4,7 @@
 #include "functions/auth.h"
 #include "functions/antrian.h"
 #include "functions/stock.h"
+#include "functions/cari.h"
 #include <vector>
 
 using namespace std;
@@ -81,8 +82,9 @@ void adminMenu() {
                 hapusAntrian();
                 system("pause");
                 break;
-            case 3:
-                cout << "Cari data" << endl;
+                case 3:
+                cariDataWarga();
+                system("pause");
                 break;
             case 4:
                 cout << "Riwayat distribusi" << endl;
