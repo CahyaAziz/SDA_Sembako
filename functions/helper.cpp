@@ -15,11 +15,12 @@ void saveUser(const akun& user, const string& filename) {
              << user.nama << ","
              << user.jenisKelamin << ","
              << user.umur << ","
-             << user.password << "\n";
+             << user.password << ","
+             << (user.menerima ? "1" : "0") << "\n";
         file.close();
-        cout << "Data user berhasil di save" << filename << endl;
+        cout << "Data user berhasil disimpan ke file " << filename << endl;
     } else {
-        cout << "Error opening file for writing!" << endl;
+        cout << "Error membuka file untuk menyimpan data!" << endl;
     }
 }
 
@@ -31,18 +32,54 @@ vector<akun> loadUsers(const string& filename) {
     while (getline(file, line)) {
         stringstream ss(line);
         akun u;
-        string umurStr;
+        string umurStr, menerimaStr;
 
         getline(ss, u.NIK, ',');
         getline(ss, u.nama, ',');
-        ss >> u.jenisKelamin;
-        ss.ignore(); // skip comma
+        string jenisKelaminStr;
+        getline(ss, jenisKelaminStr, ',');
+        u.jenisKelamin = jenisKelaminStr[0];
         getline(ss, umurStr, ',');
-        u.umur = stoi(umurStr);
         getline(ss, u.password, ',');
+        getline(ss, menerimaStr, ',');
+
+        u.umur = stoi(umurStr);
+        u.menerima = (menerimaStr == "1");
 
         users.push_back(u);
     }
 
     return users;
 }
+
+bool isPenerima(const std::string& nama) {
+    std::vector<akun> users = loadUsers();
+    for (const akun& u : users) {
+        if (u.nama == nama && u.menerima) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void updateStatus(const std::string& nama) {
+    std::vector<akun> users = loadUsers();
+    for (akun& u : users) {
+        if (u.nama == nama) {
+            u.menerima = true;
+            break;
+        }
+    }
+
+    // Tulis ulang file
+    std::ofstream file("users.csv");
+    for (const akun& u : users) {
+        file << u.NIK << ","
+            << u.nama << ","
+            << u.jenisKelamin << ","
+            << u.umur << ","
+            << u.password << ","
+            << (u.menerima ? "1" : "0") << "\n";
+    }
+}
+

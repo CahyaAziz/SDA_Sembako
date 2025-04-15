@@ -1,10 +1,11 @@
 #include <iostream>
 #include <iomanip>
-#include <cstdlib>
 #include "functions/auth.h"
 #include "functions/antrian.h"
 #include "functions/stock.h"
+#include "functions/distribusi.h"
 #include "functions/cari.h"
+#include "functions/helper.h"
 #include <vector>
 
 using namespace std;
@@ -40,10 +41,15 @@ void userMenu(string user) {
                 lihatAntrian();
                 system("pause");
                 break;
-                case 2:
-                tambahAntrian(user);
+            case 2:
+                if (isPenerima(user)) { 
+                    tambahAntrian(user);
+                } else {
+                    cout << "Maaf, Anda tidak memenuhi syarat untuk menerima sembako.\n";
+                }
                 system("pause");
                 break;
+            
             case 3:
                 cout << "Terima sembako" << endl;
                 break;
@@ -66,8 +72,9 @@ void adminMenu() {
         cout << "| 1  | Lihat antrian                   |" << endl;
         cout << "| 2  | Hapus antrian                   |" << endl;
         cout << "| 3  | Cari data                       |" << endl;
-        cout << "| 4  | Riwayat distribusi              |" << endl;
+        cout << "| 4  | Panggil Antrian                 |" << endl;
         cout << "| 5  | Lihat dan edit stok             |" << endl;
+        cout << "| 6  | Riwayat distribusi              |" << endl;
         cout << "| 0  | Keluar                          |" << endl;
         cout << "========================================" << endl << endl;
         cout << "Pilih menu (0-5): ";
@@ -82,15 +89,22 @@ void adminMenu() {
                 hapusAntrian();
                 system("pause");
                 break;
-                case 3:
+            case 3:
                 cariDataWarga();
                 system("pause");
                 break;
             case 4:
-                cout << "Riwayat distribusi" << endl;
+                panggilAntrian();
+                system("pause");
                 break;
             case 5:
+                tampilanStok(daftar);
                 editStok(daftar);
+                system("pause");
+                break;
+            case 6:
+                tampilkanRiwayatDistribusi();
+                system("pause");
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;
