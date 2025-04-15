@@ -76,7 +76,7 @@ void adminMenu() {
                 lihatAntrian();
                 system("pause");
                 break;
-                case 2:
+            case 2:
                 hapusAntrian();
                 system("pause");
                 break;
@@ -86,9 +86,8 @@ void adminMenu() {
                 case 4:
                 cout << "Riwayat distribusi" << endl;
                 break;
-                case 5:
-                tampilanStok(daftar);
-                editStok(daftar);
+            case 5:
+                cout << "Lihat dan edit stok" << endl;
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;
