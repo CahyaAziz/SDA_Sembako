@@ -5,6 +5,7 @@
 #include "functions/antrian.h"
 #include "functions/stock.h"
 #include "functions/cari.h"
+#include "functions/distribusi.h"
 #include <vector>
 
 using namespace std;
@@ -87,7 +88,8 @@ void adminMenu() {
                 system("pause");
                 break;
             case 4:
-                cout << "Riwayat distribusi" << endl;
+                tampilkanRiwayatDistribusi();
+                system("pause");
                 break;
             case 5:
                 editStok(daftar);

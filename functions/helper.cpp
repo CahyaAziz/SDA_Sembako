@@ -15,7 +15,8 @@ void saveUser(const akun& user, const string& filename) {
              << user.nama << ","
              << user.jenisKelamin << ","
              << user.umur << ","
-             << user.password << "\n";
+             << user.password << ","
+             << user.menerima << "\n";
         file.close();
         cout << "Data user berhasil di save" << filename << endl;
     } else {
@@ -40,6 +41,9 @@ vector<akun> loadUsers(const string& filename) {
         getline(ss, umurStr, ',');
         u.umur = stoi(umurStr);
         getline(ss, u.password, ',');
+        string menerimaStr;
+        getline(ss, menerimaStr, ',');
+        u.menerima = (menerimaStr == "1" || menerimaStr == "true");
 
         users.push_back(u);
     }
