@@ -1,4 +1,5 @@
 #include "antrian.h"
+#include "helper.h"
 #include <iostream>
 using namespace std;
 
@@ -24,6 +25,7 @@ int hitungJumlahAntrian() {
     }
     return jumlah;
 }
+
 
 void tambahAntrian(string nama) {
     if (sudahAdaDalamAntrian(nama)) {
@@ -70,4 +72,31 @@ void hapusAntrian() {
     cout << "Menghapus antrian: " << hapus->nama << endl;
     head = head->next;
     delete hapus;
+}
+
+void panggilAntrian() {
+    while (head != nullptr) {
+        cout << "\nMemanggil antrian atas nama: " << head->nama << endl;
+        cout << "Apakah warga hadir dan menerima sembako?" << endl;
+        cout << "1. Ya" << endl;
+        cout << "2. Tidak, lewati" << endl;
+        cout << "3. Keluar dari menu panggil antrian" << endl;
+        cout << "Pilihan: ";
+        int opsi;
+        cin >> opsi;
+
+        if (opsi == 1) {
+            updateStatus(head->nama);  // update status jadi sudah menerima
+            hapusAntrian();            // hapus dari antrian
+        } else if (opsi == 2) {
+            cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
+            hapusAntrian(); // bisa juga disimpan di list terpisah kalau mau
+        } else {
+            break;
+        }
+    }
+
+    if (head == nullptr) {
+        cout << "Antrian telah habis.\n";
+    }
 }

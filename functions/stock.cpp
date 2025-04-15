@@ -33,40 +33,4 @@ void editStok(vector<Sembako>& daftar) {
     } else {
         cout << "Stok berhasil diperbarui.\n";
     }
-};
-
-int main() {
-    vector<Sembako>daftar = {
-        {"Beras", 100},
-        {"Minyak Goreng", 50},
-        {"Gula", 30},
-        {"Susu", 20},
-        {"Mie Instan", 200}
-    };
-
-    int menu;
-    do {
-        cout << "=== Menu Stok Sembako ===\n";
-        cout << "1. Tampilkan Stok\n";
-        cout << "2. Edit Stok\n";
-        cout << "3. Keluar\n";
-        cout << "Pilih menu: ";
-        cin >> menu;
-
-        switch (menu) {
-            case 1:
-                tampilanStok(daftar);
-                break;
-            case 2:
-                editStok(daftar);
-                break;
-            case 3:
-                cout << "Keluar dari program.\n";
-                break;
-            default:
-                cout << "Pilihan tidak valid!\n";
-        } 
-    } while (menu != 3);
-
-    return 0;
 }

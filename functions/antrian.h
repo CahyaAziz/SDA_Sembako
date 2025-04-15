@@ -11,8 +11,11 @@ struct Node {
 
 extern Node* head;
 
+bool sudahAdaDalamAntrian(string nama);
+int hitungJumlahAntrian();
 void tambahAntrian(string nama);
 void lihatAntrian();
 void hapusAntrian();
+void panggilAntrian(); // ← Tambahkan ini agar bisa digunakan di main.cpp
 
 #endif

@@ -5,15 +5,13 @@
 using namespace std;
 
 struct akun {
-    std::string NIK;
-    std::string nama;
+    string NIK;
+    string nama;
     char jenisKelamin;
     int umur;
-    std::string password;
+    string password;
     bool menerima;
 };
-
-extern akun user;
 
 void registerAkun();
 string login();
