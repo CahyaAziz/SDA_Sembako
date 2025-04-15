@@ -45,6 +45,7 @@ void registerAkun() {
     cin >> user.umur;
     cout << "Masukkan Password: ";
     cin >> user.password;
+    user.menerima = false;
     
     saveUser(user);
 }
