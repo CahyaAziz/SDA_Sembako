@@ -9,21 +9,27 @@
 #include <vector>
 
 using namespace std;
-vector<Sembako> daftar = {
-    {"Beras", 100},
-    {"Minyak Goreng", 50},
-    {"Gula", 30},
-    {"Susu", 20},
-    {"Mie Instan", 200}
-};
 
-void userMenu(string user) {
-    while(true) {
+vector<Sembako> daftar = loadSembako();
+
+void userMenu(string NIK) {
+    vector<akun> users = loadUsers();
+    string userName;
+
+    // Find the user's name based on their NIK
+    for (const akun& user : users) {
+        if (user.NIK == NIK) {
+            userName = user.nama;
+            break;
+        }
+    }
+
+    while (true) {
         system("CLS");
-        string welcome = "Selamat datang " + user + "!";
+        string welcome = "Selamat datang " + userName + "!";
         cout << "========================================" << endl;
         cout << "|                                      |" << endl;
-        cout << "| " << left << setw(37) << welcome << "|\n";
+        cout << "| " << left << setw(37) << welcome << "|" << endl;
         cout << "|                                      |" << endl;
         cout << "========================================" << endl;
         cout << "| No |           MENU UTAMA            |" << endl;
@@ -42,16 +48,16 @@ void userMenu(string user) {
                 system("pause");
                 break;
             case 2:
-                if (isPenerima(user)) { 
-                    tambahAntrian(user);
+                if (isPenerima(NIK)) { 
+                    tambahAntrian(NIK, userName); // Pass NIK and name
                 } else {
                     cout << "Maaf, Anda tidak memenuhi syarat untuk menerima sembako.\n";
                 }
                 system("pause");
                 break;
-            
             case 3:
-                cout << "Terima sembako" << endl;
+                terimaSembako(daftar, NIK);
+                system("pause");
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;
@@ -70,7 +76,7 @@ void adminMenu() {
         cout << "| No |           MENU ADMIN            |" << endl;
         cout << "========================================" << endl;
         cout << "| 1  | Lihat antrian                   |" << endl;
-        cout << "| 2  | Hapus antrian                   |" << endl;
+        cout << "| 2  | Hapus antrian terdepan          |" << endl;
         cout << "| 3  | Cari data                       |" << endl;
         cout << "| 4  | Panggil Antrian                 |" << endl;
         cout << "| 5  | Lihat dan edit stok             |" << endl;
@@ -98,7 +104,6 @@ void adminMenu() {
                 system("pause");
                 break;
             case 5:
-                tampilanStok(daftar);
                 editStok(daftar);
                 system("pause");
                 break;

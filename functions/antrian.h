@@ -5,17 +5,18 @@
 using namespace std;
 
 struct Node {
+    string NIK;
     string nama;
     Node* next;
 };
 
 extern Node* head;
 
-bool sudahAdaDalamAntrian(string nama);
+bool sudahAdaDalamAntrian(string NIK);
 int hitungJumlahAntrian();
-void tambahAntrian(string nama);
+void tambahAntrian(string NIK, string nama);
 void lihatAntrian();
 void hapusAntrian();
-void panggilAntrian(); // ← Tambahkan ini agar bisa digunakan di main.cpp
+void panggilAntrian();
 
 #endif

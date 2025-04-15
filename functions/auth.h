@@ -10,7 +10,8 @@ struct akun {
     char jenisKelamin;
     int umur;
     string password;
-    bool menerima;
+    bool queue;     // Indicates if the user is in the queue
+    bool menerima;  // Indicates if the user has received sembako
 };
 
 void registerAkun();

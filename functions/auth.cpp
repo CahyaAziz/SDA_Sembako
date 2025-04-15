@@ -39,26 +39,30 @@ void registerAkun() {
         cout << "Masukkan Jenis Kelamin (L/P): ";
         cin >> user.jenisKelamin;
         if (tolower(user.jenisKelamin) == 'l' || tolower(user.jenisKelamin) == 'p') {
-            system("CLS");
             break;
         }
     }
 
-    cout << "Masukkan Umur: ";
-    cin >> user.umur;
+    while (true) {
+        cout << "Masukkan Umur: ";
+        cin >> user.umur;
+        if (user.umur >= 40) {
+            break;
+        }
+    }
+    
     cout << "Masukkan Password: ";
     cin >> user.password;
 
-    // Otomatis set menerima jika umur >= 40
-    user.menerima = (user.umur >= 40);
+    user.queue = false;
+    user.menerima = false;
 
     saveUser(user);
 }
 
 string login() {
     system("CLS");
-    string NIK;
-    string password;
+    string NIK, password;
     cout << "=== LOGIN ===" << endl;
     cout << "Masukkan NIK: ";
     cin >> NIK;
@@ -70,15 +74,16 @@ string login() {
     }
 
     vector<akun> users = loadUsers();
-
     for (const akun& user : users) {
         if (user.NIK == NIK && user.password == password) {
             cout << "\nLogin berhasil!" << endl;
-            return user.nama;
+            system("pause");
+            return user.NIK; // Return the user's NIK
         }
     }
 
     cout << "\nLogin gagal! NIK atau password salah." << endl;
+    system("pause");
     return "null";
 }
 

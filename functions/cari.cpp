@@ -17,12 +17,12 @@ void cariDataWarga() {
     bool ditemukan = false;
 
     cout << "=== Cari Data Warga ===\n";
-    cout << "Masukkan NIK atau Nama: ";
+    cout << "Masukkan NIK: ";
     cin.ignore(); // Clear buffer
     getline(cin, input);
 
     for (const akun& u : users) {
-        if (u.NIK == input || u.nama == input) {
+        if (u.NIK == input) {
             ditemukan = true;
 
             cout << "\nData Ditemukan:\n";
@@ -36,7 +36,7 @@ void cariDataWarga() {
             int posisi = 1;
             bool dalamAntrian = false;
             while (temp != nullptr) {
-                if (temp->nama == u.nama) {
+                if (temp->NIK == u.NIK) {
                     dalamAntrian = true;
                     break;
                 }
@@ -53,12 +53,12 @@ void cariDataWarga() {
                 cout << "\nHapus dari antrian? (y/n): ";
                 cin >> hapus;
                 if (tolower(hapus) == 'y') {
-                    if (head->nama == u.nama) {
+                    if (head->NIK == u.NIK) {
                         hapusAntrian();
                     } else {
                         Node* prev = head;
                         Node* curr = head->next;
-                        while (curr != nullptr && curr->nama != u.nama) {
+                        while (curr != nullptr && curr->NIK != u.NIK) {
                             prev = curr;
                             curr = curr->next;
                         }
@@ -70,7 +70,7 @@ void cariDataWarga() {
                     }
                 }
             } else {
-                cout << "Status        : Sudah menerima sembako atau belum mengambil antrian\n";
+                cout << "Status        : " << (u.menerima ? "Sudah menerima sembako" : "Belum menerima sembako") << endl;
             }
 
             break;
@@ -82,5 +82,4 @@ void cariDataWarga() {
     }
 
     cout << endl;
-    system("pause");
 }
