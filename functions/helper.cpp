@@ -12,12 +12,12 @@ void saveUser(const akun& user, const string& filename) {
     ofstream file(filename, ios::app); // append mode
     if (file.is_open()) {
         file << user.NIK << "," 
-             << user.nama << "," 
-             << user.jenisKelamin << "," 
-             << user.umur << "," 
-             << user.password << "," 
-             << (user.queue ? "1" : "0") << "," 
-             << (user.menerima ? "1" : "0") << "\n";
+            << user.nama << "," 
+            << user.jenisKelamin << "," 
+            << user.umur << "," 
+            << user.password << "," 
+            << (user.queue ? "1" : "0") << "," 
+            << (user.menerima ? "1" : "0") << "\n";
         file.close();
     } else {
         cerr << "Error membuka file untuk menyimpan data!" << endl;
@@ -126,3 +126,43 @@ bool isUserInQueue(const string& NIK) {
     return false;
 }
 
+void saveStokToCSV(const vector<Sembako>& daftar) {
+    ofstream file("stock.csv");
+    if (!file.is_open()) {
+        cout << "Gagal menyimpan stok ke file.\n";
+        return;
+    }
+
+    for (const Sembako& item : daftar) {
+        file << item.nama << "," << item.stok << "\n";
+    }
+
+    file.close();
+}
+
+vector<Sembako> loadStokFromCSV() {
+    vector<Sembako> daftar;
+    ifstream file("stock.csv");
+    if (!file.is_open()) {
+        cout << "Gagal membuka file stok.csv.\n";
+        return daftar;
+    }
+
+    string line;
+    while (getline(file, line)) {
+        stringstream ss(line);
+        string nama, stokStr;
+        getline(ss, nama, ',');
+        getline(ss, stokStr);
+
+        if (!nama.empty() && !stokStr.empty()) {
+            Sembako item;
+            item.nama = nama;
+            item.stok = stoi(stokStr);
+            daftar.push_back(item);
+        }
+    }
+
+    file.close();
+    return daftar;
+}
