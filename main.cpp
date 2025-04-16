@@ -13,13 +13,14 @@ using namespace std;
 vector<Sembako> daftar = loadSembako();
 
 void userMenu(string NIK) {
-    vector<akun> users = loadUsers();
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
     string userName;
 
     // Find the user's name based on their NIK
-    for (const akun& user : users) {
-        if (user.NIK == NIK) {
-            userName = user.nama;
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].NIK == NIK) {
+            userName = users[i].nama;
             break;
         }
     }

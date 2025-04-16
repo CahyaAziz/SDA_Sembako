@@ -46,7 +46,7 @@ void editStok(vector<Sembako>& daftar) {
         cout << "Stok berhasil diperbarui.\n";
     }
 
-    saveStokToCSV(daftar);  // Simpan perubahan
+    saveStok(daftar);  // Simpan perubahan
 }
 
 bool checkStock(const vector<Sembako>& daftar, const vector<pair<string, int>>& minimums) {
@@ -82,24 +82,25 @@ void kurangiStok(vector<Sembako>& daftar, const vector<pair<string, int>>& minim
             }
         }
     }
-    saveStokToCSV(daftar); // Simpan setelah dikurangi
+    saveStok(daftar); // Simpan setelah dikurangi
 }
 
 void terimaSembako(vector<Sembako>& daftar, const string& NIK) {
-    vector<akun> users = loadUsers();
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
 
     if (!checkStock(daftar, minimum)) {
         cout << "Stok tidak mencukupi.\n";
         return;
     }
 
-    for (const akun& u : users) {
-        if (u.NIK == NIK) {
-            if (u.menerima) {
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].NIK == NIK) {
+            if (users[i].menerima) {
                 cout << "Anda sudah menerima sembako.\n";
                 return;
             }
-            if (u.queue) {
+            if (users[i].queue) {
                 cout << "\n=== Daftar Sembako ===\n";
                 cout << "Beras - 5kg\nTelur - 1kg\nMinyak - 2L\nGula - 1kg\nSusu - 2\nMie Instan - 10\n\n";
 

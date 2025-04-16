@@ -7,14 +7,16 @@
 #include "stock.h"
 using namespace std;
 
+#define MAX_USERS 50
+
 void saveUser(const akun& user, const string& filename = "users.csv");
-vector<akun> loadUsers(const string& filename = "users.csv");
+int loadUsers(akun users[], const string& filename = "users.csv");
 vector<Sembako> loadSembako(const string& filename = "stock.csv");
 bool isPenerima(const string& nama);
 void updateStatus(const string& nama);
 bool isUserInQueue(const string& NIK);
-void saveStokToCSV(const std::vector<Sembako>& daftar);
-std::vector<Sembako> loadStokFromCSV();
+void saveStok(const std::vector<Sembako>& daftar);
+// std::vector<Sembako> loadStokFromCSV();
 
 
 #endif

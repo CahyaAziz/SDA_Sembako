@@ -6,18 +6,19 @@
 using namespace std;
 
 void tampilkanRiwayatDistribusi() {
-    vector<akun> users = loadUsers();
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
 
     cout << "\n=== Daftar Riwayat Distribusi Sembako ===\n";
     bool adaYangMenerima = false;
 
-    for (const akun& user : users) {
-        if (user.menerima) {
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].menerima) {
             if (!adaYangMenerima) {
                 cout << "Yang Sudah Menerima:\n";
                 adaYangMenerima = true;
             }
-            cout << "- " << user.nama << " (NIK: " << user.NIK << ")\n";
+            cout << "- " << users[i].nama << " (NIK: " << users[i].NIK << ")\n";
         }
     }
 

@@ -8,6 +8,9 @@ using namespace std;
 akun user;
 
 void registerAkun() {
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
+
     while (true) {
         string NIK;
         bool dupe = false;
@@ -16,10 +19,8 @@ void registerAkun() {
         cout << "Masukkan NIK: ";
         cin >> NIK;
 
-        vector<akun> users = loadUsers();
-
-        for (const akun& i : users) {
-            if (i.NIK == NIK) {
+        for (int i = 0; i < userCount; ++i) {
+            if (users[i].NIK == NIK) {
                 cout << endl << "Akun sudah ada!" << endl;
                 dupe = true;
                 break;
@@ -73,12 +74,14 @@ string login() {
         return "admin";
     }
 
-    vector<akun> users = loadUsers();
-    for (const akun& user : users) {
-        if (user.NIK == NIK && user.password == password) {
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
+
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].NIK == NIK && users[i].password == password) {
             cout << "\nLogin berhasil!" << endl;
             system("pause");
-            return user.NIK; // Return the user's NIK
+            return users[i].NIK; // Return the user's NIK
         }
     }
 
