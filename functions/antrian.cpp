@@ -63,6 +63,7 @@ void lihatAntrian() {
 }
 
 void hapusAntrian() {
+    updateStatus(head->NIK, false);
     if (head == nullptr) {
         cout << "Antrian kosong." << endl;
         return;
@@ -100,6 +101,7 @@ void panggilAntrian() {
 
             if (opsi == 1) {
                 cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
+                updateStatus(head->NIK, false);
                 lewatiAntrian();
                 continue;
             } else if (opsi == 2) {
@@ -120,7 +122,7 @@ void panggilAntrian() {
         cin >> opsi;
 
         if (opsi == 1) {
-            updateStatus(head->NIK); 
+            updateStatus(head->NIK, true); 
             break;
         } else if (opsi == 2) {
             cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
