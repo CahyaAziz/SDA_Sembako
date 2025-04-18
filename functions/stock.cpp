@@ -94,6 +94,11 @@ void terimaSembako(vector<Sembako>& daftar, const string& NIK) {
         return;
     }
 
+    if (!sudahAdaDalamAntrian(NIK)) {
+        cout << "Anda belum masuk dalam antrian! Silakan tambahkan ke antrian terlebih dahulu.\n";
+        return;
+    }
+
     for (int i = 0; i < userCount; ++i) {
         if (users[i].NIK == NIK) {
             if (users[i].menerima) {

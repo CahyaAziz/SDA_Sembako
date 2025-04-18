@@ -90,7 +90,7 @@ void lewatiAntrian() {
 
 void panggilAntrian() {
     while (head != nullptr) {
-        if (isUserInQueue(head->NIK)) { // Check if the user has queue = true
+        if (isUserInQueue(head->NIK)) {
             cout << "\nUser atas nama: " << head->nama << " (NIK: " << head->NIK << ") belum mengambil sembako." << endl;
             cout << "1. Lewati antrian" << endl;
             cout << "2. Kembali ke menu admin" << endl;
@@ -103,7 +103,7 @@ void panggilAntrian() {
                 lewatiAntrian();
                 continue;
             } else if (opsi == 2) {
-                return; // Exit to admin menu
+                return;
             } else {
                 cout << "Pilihan tidak valid!" << endl;
                 continue;
@@ -120,7 +120,7 @@ void panggilAntrian() {
         cin >> opsi;
 
         if (opsi == 1) {
-            updateStatus(head->NIK);  // update status jadi sudah menerima
+            updateStatus(head->NIK); 
             break;
         } else if (opsi == 2) {
             cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
