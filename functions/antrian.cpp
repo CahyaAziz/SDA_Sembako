@@ -100,7 +100,6 @@ void panggilAntrian() {
 
             if (opsi == 1) {
                 cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
-                // hapusAntrian();
                 lewatiAntrian();
                 continue;
             } else if (opsi == 2) {
@@ -125,7 +124,6 @@ void panggilAntrian() {
             break;
         } else if (opsi == 2) {
             cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
-            // hapusAntrian();
             lewatiAntrian();
             break;
         } else {
