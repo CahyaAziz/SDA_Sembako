@@ -73,6 +73,21 @@ void hapusAntrian() {
     delete hapus;
 }
 
+void lewatiAntrian() {
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    Node* lewati = head;
+    head = head->next;
+    lewati->next = nullptr;
+
+    Node* temp = head;
+    while (temp->next != nullptr)
+        temp = temp->next;
+    temp->next = lewati;
+}
+
 void panggilAntrian() {
     while (head != nullptr) {
         if (isUserInQueue(head->NIK)) { // Check if the user has queue = true
@@ -85,7 +100,8 @@ void panggilAntrian() {
 
             if (opsi == 1) {
                 cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
-                hapusAntrian();
+                // hapusAntrian();
+                lewatiAntrian();
                 continue;
             } else if (opsi == 2) {
                 return; // Exit to admin menu
@@ -109,7 +125,8 @@ void panggilAntrian() {
             break;
         } else if (opsi == 2) {
             cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
-            hapusAntrian();
+            // hapusAntrian();
+            lewatiAntrian();
             break;
         } else {
             break;
