@@ -17,6 +17,7 @@ int hitungJumlahAntrian();
 void tambahAntrian(string NIK, string nama);
 void lihatAntrian();
 void hapusAntrian();
+void lewatiAntrian();
 void panggilAntrian();
 
 #endif
