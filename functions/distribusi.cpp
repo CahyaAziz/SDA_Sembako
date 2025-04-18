@@ -2,20 +2,30 @@
 #include <vector>
 #include "auth.h"
 #include "helper.h"
-#include "distribusi.h"
 
 using namespace std;
 
 void tampilkanRiwayatDistribusi() {
-    vector<akun> users = loadUsers();
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
 
     cout << "\n=== Daftar Riwayat Distribusi Sembako ===\n";
-    cout << "Yang Sudah Menerima:\n";
-    for (const akun& user : users) {
-        if (user.menerima) {
-            cout << "- " << user.nama << " (NIK: " << user.NIK << ")\n";
+    bool adaYangMenerima = false;
+
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].menerima) {
+            if (!adaYangMenerima) {
+                cout << "Yang Sudah Menerima:\n";
+                adaYangMenerima = true;
+            }
+            cout << "- " << users[i].nama << " (NIK: " << users[i].NIK << ")\n";
         }
+    }
+
+    if (!adaYangMenerima) {
+        cout << "Belum ada warga yang menerima sembako.\n";
     }
 
     cout << endl;
 }
+

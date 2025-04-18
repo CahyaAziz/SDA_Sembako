@@ -12,31 +12,32 @@ extern Node* head;
 
 void cariDataWarga() {
     system("CLS");
-    vector<akun> users = loadUsers();
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
     string input;
     bool ditemukan = false;
 
     cout << "=== Cari Data Warga ===\n";
-    cout << "Masukkan NIK atau Nama: ";
+    cout << "Masukkan NIK: ";
     cin.ignore(); // Clear buffer
     getline(cin, input);
 
-    for (const akun& u : users) {
-        if (u.NIK == input || u.nama == input) {
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].NIK == input) {
             ditemukan = true;
 
             cout << "\nData Ditemukan:\n";
-            cout << "NIK           : " << u.NIK << endl;
-            cout << "Nama          : " << u.nama << endl;
-            cout << "Jenis Kelamin : " << u.jenisKelamin << endl;
-            cout << "Umur          : " << u.umur << endl;
+            cout << "NIK           : " << users[i].NIK << endl;
+            cout << "Nama          : " << users[i].nama << endl;
+            cout << "Jenis Kelamin : " << users[i].jenisKelamin << endl;
+            cout << "Umur          : " << users[i].umur << endl;
 
             // Cek status antrian
             Node* temp = head;
             int posisi = 1;
             bool dalamAntrian = false;
             while (temp != nullptr) {
-                if (temp->nama == u.nama) {
+                if (temp->NIK == users[i].NIK) {
                     dalamAntrian = true;
                     break;
                 }
@@ -53,12 +54,12 @@ void cariDataWarga() {
                 cout << "\nHapus dari antrian? (y/n): ";
                 cin >> hapus;
                 if (tolower(hapus) == 'y') {
-                    if (head->nama == u.nama) {
+                    if (head->NIK == users[i].NIK) {
                         hapusAntrian();
                     } else {
                         Node* prev = head;
                         Node* curr = head->next;
-                        while (curr != nullptr && curr->nama != u.nama) {
+                        while (curr != nullptr && curr->NIK != users[i].NIK) {
                             prev = curr;
                             curr = curr->next;
                         }
@@ -70,7 +71,7 @@ void cariDataWarga() {
                     }
                 }
             } else {
-                cout << "Status        : Sudah menerima sembako atau belum mengambil antrian\n";
+                cout << "Status        : " << (users[i].menerima ? "Sudah menerima sembako" : "Belum menerima sembako") << endl;
             }
 
             break;
@@ -82,5 +83,4 @@ void cariDataWarga() {
     }
 
     cout << endl;
-    system("pause");
 }

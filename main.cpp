@@ -1,29 +1,36 @@
 #include <iostream>
 #include <iomanip>
-#include <cstdlib>
 #include "functions/auth.h"
 #include "functions/antrian.h"
 #include "functions/stock.h"
-#include "functions/cari.h"
 #include "functions/distribusi.h"
+#include "functions/cari.h"
+#include "functions/helper.h"
 #include <vector>
 
 using namespace std;
-vector<Sembako> daftar = {
-    {"Beras", 100},
-    {"Minyak Goreng", 50},
-    {"Gula", 30},
-    {"Susu", 20},
-    {"Mie Instan", 200}
-};
 
-void userMenu(string user) {
-    while(true) {
+vector<Sembako> daftar = loadSembako();
+
+void userMenu(string NIK) {
+    akun users[MAX_USERS];
+    int userCount = loadUsers(users);
+    string userName;
+
+    // Find the user's name based on their NIK
+    for (int i = 0; i < userCount; ++i) {
+        if (users[i].NIK == NIK) {
+            userName = users[i].nama;
+            break;
+        }
+    }
+
+    while (true) {
         system("CLS");
-        string welcome = "Selamat datang " + user + "!";
+        string welcome = "Selamat datang " + userName + "!";
         cout << "========================================" << endl;
         cout << "|                                      |" << endl;
-        cout << "| " << left << setw(37) << welcome << "|\n";
+        cout << "| " << left << setw(37) << welcome << "|" << endl;
         cout << "|                                      |" << endl;
         cout << "========================================" << endl;
         cout << "| No |           MENU UTAMA            |" << endl;
@@ -41,12 +48,17 @@ void userMenu(string user) {
                 lihatAntrian();
                 system("pause");
                 break;
-                case 2:
-                tambahAntrian(user);
+            case 2:
+                if (isPenerima(NIK)) { 
+                    tambahAntrian(NIK, userName); // Pass NIK and name
+                } else {
+                    cout << "Maaf, Anda tidak memenuhi syarat untuk menerima sembako.\n";
+                }
                 system("pause");
                 break;
             case 3:
-                cout << "Terima sembako" << endl;
+                terimaSembako(daftar, NIK);
+                system("pause");
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;
@@ -65,10 +77,11 @@ void adminMenu() {
         cout << "| No |           MENU ADMIN            |" << endl;
         cout << "========================================" << endl;
         cout << "| 1  | Lihat antrian                   |" << endl;
-        cout << "| 2  | Hapus antrian                   |" << endl;
+        cout << "| 2  | Hapus antrian terdepan          |" << endl;
         cout << "| 3  | Cari data                       |" << endl;
-        cout << "| 4  | Riwayat distribusi              |" << endl;
+        cout << "| 4  | Panggil Antrian                 |" << endl;
         cout << "| 5  | Lihat dan edit stok             |" << endl;
+        cout << "| 6  | Riwayat distribusi              |" << endl;
         cout << "| 0  | Keluar                          |" << endl;
         cout << "========================================" << endl << endl;
         cout << "Pilih menu (0-5): ";
@@ -83,16 +96,21 @@ void adminMenu() {
                 hapusAntrian();
                 system("pause");
                 break;
-                case 3:
+            case 3:
                 cariDataWarga();
                 system("pause");
                 break;
             case 4:
-                tampilkanRiwayatDistribusi();
+                panggilAntrian();
                 system("pause");
                 break;
             case 5:
                 editStok(daftar);
+                system("pause");
+                break;
+            case 6:
+                tampilkanRiwayatDistribusi();
+                system("pause");
                 break;
             case 0:
                 cout << "Keluar dari program" << endl;

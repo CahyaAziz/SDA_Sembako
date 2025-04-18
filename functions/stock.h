@@ -3,14 +3,20 @@
 
 #include <string>
 #include <vector>
-using namespace std;
+#include <utility> // untuk std::pair
 
 struct Sembako {
-    string nama;
+    std::string nama;
     int stok;
 };
 
-void tampilanStok(const vector<Sembako>& daftar);
-void editStok(vector<Sembako>& daftar);
+// Deklarasi variabel minimum dari stock.cpp
+extern std::vector<std::pair<std::string, int>> minimum;
 
-#endif
+// Fungsi-fungsi terkait stok sembako
+void tampilanStok(const std::vector<Sembako>& daftar);
+void editStok(std::vector<Sembako>& daftar);
+bool checkStock(const std::vector<Sembako>& daftar, const std::vector<std::pair<std::string, int>>& minimums);
+void terimaSembako(std::vector<Sembako>& daftar, const std::string& NIK); // <- diperbaiki agar daftar bisa berubah stoknya
+
+#endif // STOCK_H
