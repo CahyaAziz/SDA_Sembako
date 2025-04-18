@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <limits>
 #include "auth.h"
 #include "helper.h"
 #include "conio.h"
@@ -14,10 +15,10 @@ string inputPassword() {
     while (true) {
         ch = _getch();
 
-        if (ch == 13) { // ENTER
+        if (ch == 13) {
             cout << endl;
             break;
-        } else if (ch == 8) { // BACKSPACE
+        } else if (ch == 8) {
             if (!password.empty()) {
                 password.pop_back();
                 cout << "\b \b";
@@ -35,23 +36,38 @@ void registerAkun() {
     akun users[MAX_USERS];
     int userCount = loadUsers(users);
 
+    system("CLS");
     while (true) {
         string NIK;
         bool dupe = false;
 
-        system("CLS");
         cout << "Masukkan NIK: ";
         cin >> NIK;
 
+        // Validate that NIK contains only digits
+        bool isNumeric = true;
+        for (char c : NIK) {
+            if (!isdigit(c)) {
+                isNumeric = false;
+                break;
+            }
+        }
+
+        if (!isNumeric) {
+            cout << "NIK harus berupa angka. Silakan masukkan lagi." << endl;
+            continue;
+        }
+
         for (int i = 0; i < userCount; ++i) {
             if (users[i].NIK == NIK) {
-                cout << endl << "Akun sudah ada!" << endl;
+                cout << endl << "NIK sudah terdaftar! Silakan gunakan NIK berbeda" << endl;
                 dupe = true;
                 break;
             }
         }
         if (dupe) {
-            continue;
+            system("pause");
+            return;
         }
         user.NIK = NIK;
         break;
@@ -61,35 +77,45 @@ void registerAkun() {
     cin >> user.nama;
 
     while (true) {
-        cout << "\nMasukkan Jenis Kelamin (L/P): ";
+        cout << "Masukkan Jenis Kelamin (L/P): ";
         cin >> user.jenisKelamin;
     
-        // Ubah ke huruf kecil agar lebih fleksibel
         char jk = tolower(user.jenisKelamin);
     
         if (jk == 'l' || jk == 'p') {
             break;
         } else {
-            cout << "Input tidak valid. Silakan masukkan 'L' atau 'P'.";
+            cout << "Input tidak valid. Silakan masukkan 'L' atau 'P'." << endl;
         }
     }
     
     while (true) {
-        cout << "\nMasukkan Umur: ";
+        cout << "Masukkan Umur: ";
         cin >> user.umur;
-    
+
+        if (cin.fail()) {
+            cin.clear(); // Clear the error flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Discard invalid input
+            cout << "Input tidak valid. Masukkan angka." << endl;
+            continue;
+        }
+
         if (user.umur >= 40) {
             break;
         } else {
-            cout << "Anda tidak memenuhi syarat.";
+            cout << "Anda tidak memenuhi syarat." << endl;
         }
     }
     
-
-
-    
-    cout << "\nMasukkan Password: ";
-    user.password = inputPassword();
+    while (true) {
+        cout << "Masukkan Password: ";
+        user.password = inputPassword();
+        if (user.password.empty()) {
+            cout << "Password tidak boleh kosong. Silakan masukkan lagi. " << endl;
+        } else {
+            break;
+        }
+    }
 
     user.queue = false;
     user.menerima = false;
