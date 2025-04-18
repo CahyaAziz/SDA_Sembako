@@ -93,23 +93,32 @@ bool isPenerima(const string& NIK) {
     return false;
 }
 
-void updateStatus(const string& NIK) {
+void updateStatus(const string& NIK, bool queueState) {
     akun users[MAX_USERS];
     int userCount = loadUsers(users, "users.csv");
 
     for (int i = 0; i < userCount; ++i) {
         if (users[i].NIK == NIK) {
-            if (users[i].queue) {
-                users[i].menerima = true;
-                break;
-            } else {
-                users[i].queue = true;
+            if (queueState == true) {
+                if (users[i].queue) {
+                    users[i].menerima = true; // Mark as received if queue is false
+                } else {
+                    users[i].queue = queueState;
+                }
+            } else if (queueState == false) {
+                users[i].queue = queueState;
             }
+            break;
         }
     }
 
     // Tulis ulang file
     ofstream file("users.csv");
+    if (!file.is_open()) {
+        cerr << "Error membuka file users.csv untuk menulis ulang data!" << endl;
+        return;
+    }
+
     for (int i = 0; i < userCount; ++i) {
         file << users[i].NIK << ","
              << users[i].nama << ","
@@ -119,6 +128,8 @@ void updateStatus(const string& NIK) {
              << (users[i].queue ? "1" : "0") << ","
              << (users[i].menerima ? "1" : "0") << "\n";
     }
+
+    file.close();
 }
 
 bool isUserInQueue(const string& NIK) {

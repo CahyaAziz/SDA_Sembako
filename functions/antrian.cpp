@@ -63,6 +63,7 @@ void lihatAntrian() {
 }
 
 void hapusAntrian() {
+    updateStatus(head->NIK, false);
     if (head == nullptr) {
         cout << "Antrian kosong." << endl;
         return;
@@ -73,9 +74,24 @@ void hapusAntrian() {
     delete hapus;
 }
 
+void lewatiAntrian() {
+    if (head == nullptr || head->next == nullptr) {
+        return;
+    }
+
+    Node* lewati = head;
+    head = head->next;
+    lewati->next = nullptr;
+
+    Node* temp = head;
+    while (temp->next != nullptr)
+        temp = temp->next;
+    temp->next = lewati;
+}
+
 void panggilAntrian() {
     while (head != nullptr) {
-        if (isUserInQueue(head->NIK)) { // Check if the user has queue = true
+        if (isUserInQueue(head->NIK)) {
             cout << "\nUser atas nama: " << head->nama << " (NIK: " << head->NIK << ") belum mengambil sembako." << endl;
             cout << "1. Lewati antrian" << endl;
             cout << "2. Kembali ke menu admin" << endl;
@@ -85,10 +101,11 @@ void panggilAntrian() {
 
             if (opsi == 1) {
                 cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
-                hapusAntrian();
+                updateStatus(head->NIK, false);
+                lewatiAntrian();
                 continue;
             } else if (opsi == 2) {
-                return; // Exit to admin menu
+                return;
             } else {
                 cout << "Pilihan tidak valid!" << endl;
                 continue;
@@ -105,11 +122,11 @@ void panggilAntrian() {
         cin >> opsi;
 
         if (opsi == 1) {
-            updateStatus(head->NIK);  // update status jadi sudah menerima
+            updateStatus(head->NIK, true); 
             break;
         } else if (opsi == 2) {
             cout << "Antrian atas nama " << head->nama << " dilewati." << endl;
-            hapusAntrian();
+            lewatiAntrian();
             break;
         } else {
             break;

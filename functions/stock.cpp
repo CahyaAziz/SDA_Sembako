@@ -94,10 +94,23 @@ void terimaSembako(vector<Sembako>& daftar, const string& NIK) {
         return;
     }
 
+    if (!sudahAdaDalamAntrian(NIK)) {
+        for (int i = 0; i < userCount; ++i) {
+            if (users[i].NIK == NIK) {
+                if (users[i].menerima) {
+                    cout << "Anda sudah menerima sembako sebelumnya.\n"; 
+                    return;
+                }
+            }
+        }
+        cout << "Anda belum masuk dalam antrian! Silakan tambahkan ke antrian terlebih dahulu.\n";
+        return;
+    }
+
     for (int i = 0; i < userCount; ++i) {
         if (users[i].NIK == NIK) {
             if (users[i].menerima) {
-                cout << "Anda sudah menerima sembako.\n";
+                cout << "Anda sudah menerima sembako sebelumnya.\n"; 
                 return;
             }
             if (users[i].queue) {
@@ -105,7 +118,7 @@ void terimaSembako(vector<Sembako>& daftar, const string& NIK) {
                 cout << "Beras - 5kg\nTelur - 1kg\nMinyak - 2L\nGula - 1kg\nSusu - 2\nMie Instan - 10\n\n";
 
                 kurangiStok(daftar, minimum);
-                updateStatus(NIK);
+                updateStatus(NIK, true);
                 hapusAntrian();
             } else {
                 cout << "Anda belum dipanggil! Silakan menunggu admin.\n";
