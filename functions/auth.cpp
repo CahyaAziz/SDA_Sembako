@@ -2,10 +2,34 @@
 #include <string>
 #include "auth.h"
 #include "helper.h"
+#include "conio.h"
 
 using namespace std;
 
 akun user;
+string inputPassword() {
+    string password = "";
+    char ch;
+
+    while (true) {
+        ch = _getch();
+
+        if (ch == 13) { // ENTER
+            cout << endl;
+            break;
+        } else if (ch == 8) { // BACKSPACE
+            if (!password.empty()) {
+                password.pop_back();
+                cout << "\b \b";
+            }
+        } else {
+            password += ch;
+            cout << '*';
+        }
+    }
+
+    return password;
+}
 
 void registerAkun() {
     akun users[MAX_USERS];
@@ -37,23 +61,35 @@ void registerAkun() {
     cin >> user.nama;
 
     while (true) {
-        cout << "Masukkan Jenis Kelamin (L/P): ";
+        cout << "\nMasukkan Jenis Kelamin (L/P): ";
         cin >> user.jenisKelamin;
-        if (tolower(user.jenisKelamin) == 'l' || tolower(user.jenisKelamin) == 'p') {
+    
+        // Ubah ke huruf kecil agar lebih fleksibel
+        char jk = tolower(user.jenisKelamin);
+    
+        if (jk == 'l' || jk == 'p') {
             break;
-        }
-    }
-
-    while (true) {
-        cout << "Masukkan Umur: ";
-        cin >> user.umur;
-        if (user.umur >= 40) {
-            break;
+        } else {
+            cout << "Input tidak valid. Silakan masukkan 'L' atau 'P'.";
         }
     }
     
-    cout << "Masukkan Password: ";
-    cin >> user.password;
+    while (true) {
+        cout << "\nMasukkan Umur: ";
+        cin >> user.umur;
+    
+        if (user.umur >= 40) {
+            break;
+        } else {
+            cout << "Anda tidak memenuhi syarat.";
+        }
+    }
+    
+
+
+    
+    cout << "\nMasukkan Password: ";
+    user.password = inputPassword();
 
     user.queue = false;
     user.menerima = false;
@@ -68,7 +104,8 @@ string login() {
     cout << "Masukkan NIK: ";
     cin >> NIK;
     cout << "Masukkan Password: ";
-    cin >> password;
+    password = inputPassword();
+
 
     if (NIK == "admin" && password == "admin") {
         return "admin";
