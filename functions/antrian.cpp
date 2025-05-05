@@ -1,30 +1,33 @@
 #include "antrian.h"
 #include "helper.h"
 #include <iostream>
+#include <queue>
 using namespace std;
+
+struct Warga {
+    string NIK;
+    string nama;
+    bool sudahAcc = false;
+};
+
+queue<Warga> antrian;
 
 Node* head = nullptr;
 
 bool sudahAdaDalamAntrian(string NIK) {
-    Node* temp = head;
-    while (temp != nullptr) {
-        if (temp->NIK == NIK) {
-            return true; // NIK sudah ada di antrian
-        }
-        temp = temp->next;
+    queue<Warga> temp = antrian;
+    while (!temp.empty()) {
+        if (temp.front().NIK == NIK) return true;
+        temp.pop();
     }
     return false;
 }
 
+
 int hitungJumlahAntrian() {
-    int jumlah = 0;
-    Node* temp = head;
-    while (temp != nullptr) {
-        jumlah++;
-        temp = temp->next;
-    }
-    return jumlah;
+    return antrian.size();
 }
+
 
 void tambahAntrian(string NIK, string nama) {
     if (sudahAdaDalamAntrian(NIK)) {
@@ -32,33 +35,27 @@ void tambahAntrian(string NIK, string nama) {
         return;
     }
 
-    Node* baru = new Node{NIK, nama, nullptr};
-    if (head == nullptr) {
-        head = baru;
-    } else {
-        Node* temp = head;
-        while (temp->next != nullptr)
-            temp = temp->next;
-        temp->next = baru;
-    }
+    Warga wargaBaru = {NIK, nama, false};
+    antrian.push(wargaBaru);
 
-    int noAntrian = hitungJumlahAntrian(); // Hitung setelah ditambahkan
+    int noAntrian = antrian.size();
     cout << "Antrian berhasil ditambahkan!\n";
     cout << "Nama: " << nama << "\n";
     cout << "Nomor Antrian Anda: " << noAntrian << endl;
 }
 
 void lihatAntrian() {
-    if (head == nullptr) {
-        cout << "Belum ada antrian." << endl;
+    if (antrian.empty()) {
+        cout << "Belum ada antrian.\n";
         return;
     }
-    cout << "Daftar Antrian:\n";
-    Node* temp = head;
+
+    queue<Warga> temp = antrian;
     int i = 1;
-    while (temp != nullptr) {
-        cout << i++ << ". " << temp->nama << " (NIK: " << temp->NIK << ")" << endl;
-        temp = temp->next;
+    while (!temp.empty()) {
+        Warga w = temp.front();
+        cout << i++ << ". " << w.nama << " (NIK: " << w.NIK << ")" << endl;
+        temp.pop();
     }
 }
 
